@@ -37,7 +37,7 @@ static boolean toggle = false;
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return motorSub.softLimit();
+    return motorSub.softLimit()||motorSub.hardLimit();
 
   }
 }

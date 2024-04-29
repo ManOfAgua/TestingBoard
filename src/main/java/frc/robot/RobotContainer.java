@@ -7,6 +7,7 @@ package frc.robot;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.MotorCommand;
+import frc.robot.commands.PIDCommand;
 import frc.robot.subsystems.PracticeMotor;
 
 import org.photonvision.proto.Photon;
@@ -16,6 +17,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PS5Controller;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -30,6 +32,8 @@ public class RobotContainer {
   PracticeMotor limitSub = new PracticeMotor();
   PS5Controller driver = new PS5Controller(0);
   JoystickButton r2 = new JoystickButton(driver, ControllerConstants.b_R2);
+  JoystickButton tri = new JoystickButton(driver, ControllerConstants.b_TRI);
+  JoystickButton sqr = new JoystickButton(driver, ControllerConstants.b_SQR);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
@@ -47,6 +51,12 @@ public class RobotContainer {
    */
   private void configureBindings() {
     r2.whileTrue(new MotorCommand(limitSub));
+    sqr.onTrue(new SequentialCommandGroup(
+      new PIDCommand(10, limitSub),
+      new PIDCommand(15, limitSub),
+      new PIDCommand(10, limitSub)
+    ));
+
     limitSub.periodic();
   }
 

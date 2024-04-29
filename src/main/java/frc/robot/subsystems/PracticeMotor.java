@@ -15,6 +15,7 @@ import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.ControlModeValue;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.math.filter.Debouncer.DebounceType;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -29,18 +30,24 @@ public class PracticeMotor extends SubsystemBase {
 
   public PracticeMotor() {
   }
-
+  public void raisePID(double speed){
+    this.m_motor.set(speed);
+  }
   public void raise(){
     if(!this.softLimit()){
-      this.setMotorSpeed(0.2);
+      this.setMotorSpeed(0.1);
     }
     else{
       this.setMotorSpeed(0);
     }
   }
 
-  private void setMotorSpeed(double speed) {
+  public void raisePID(){
+    if(!this.softLimit()){
+    }
+  }
 
+  private void setMotorSpeed(double speed) {
     this.m_motor.set(speed);
   }
 
@@ -48,7 +55,7 @@ public class PracticeMotor extends SubsystemBase {
     this.m_motor.set(0);
   }
   public boolean softLimit(){ //this works
-    if(shooterAngle()>=20){
+    if(shooterAngle()>=15){
       return true;
     }
     else{ 
