@@ -140,6 +140,7 @@ public class PhotonRunnable implements Runnable {
         } else {
           // No tags, send empty array to NT
           aprilTagPublisher.accept(emptyAprilTagArray);
+          
         }
       }
     }

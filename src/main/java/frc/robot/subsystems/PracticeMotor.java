@@ -8,6 +8,7 @@ import java.util.ResourceBundle.Control;
 
 import org.photonvision.PhotonCamera;
 import org.photonvision.targeting.PhotonPipelineResult;
+import org.photonvision.targeting.PhotonTrackedTarget;
 
 import com.ctre.phoenix6.configs.HardwareLimitSwitchConfigs;
 import com.ctre.phoenix6.configs.SoftwareLimitSwitchConfigs;
@@ -27,6 +28,17 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class PracticeMotor extends SubsystemBase {
   DigitalInput limitSwitch = new DigitalInput(0);
   TalonFX m_motor = new TalonFX(4);
+
+  //Photon
+  PhotonCamera camera = new PhotonCamera("PhotonCamera");
+  //Attempting to get Fiducial ID
+  public int DebugFiducialID()
+  {
+    var result = camera.getLatestResult();
+    PhotonTrackedTarget target = result.getBestTarget();
+    int targetID = target.getFiducialId();
+    return targetID;
+  }
 
   public PracticeMotor() {
   }
@@ -84,6 +96,7 @@ public class PracticeMotor extends SubsystemBase {
   public void periodic() {
     SmartDashboard.putBoolean("Switch", hardLimit());
     SmartDashboard.putNumber("ShooterAngle", shooterAngle());
+    SmartDashboard.putNumber("Fiducial ID", DebugFiducialID() );
     shooterAngle();
   }
 }
