@@ -36,7 +36,14 @@ public class PracticeMotor extends SubsystemBase {
   {
     var result = camera.getLatestResult();
     PhotonTrackedTarget target = result.getBestTarget();
-    int targetID = target.getFiducialId();
+    int targetID;  
+    if(target == null)
+    {
+      targetID = 0;
+    }
+    else{
+      targetID = target.getFiducialId();
+    }
     return targetID;
   }
 
